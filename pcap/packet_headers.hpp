@@ -53,7 +53,7 @@ enum class EtherType_e : uint16_t {
     kIpV4 = 0x0800,
     kVlan1Prefix = 0x8100,
     kVlan2Prefix = 0x88a8,
-    kIpV6 = 0x8600
+    kIpV6 = 0x86dd
 };
 
 struct EthernetHeader_t {

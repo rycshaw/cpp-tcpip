@@ -62,4 +62,9 @@ const EthernetHeader_t &PcapFileReader::getEthernetHeader() const
     return *reinterpret_cast<const EthernetHeader_t*>(_packet_data);
 }
 
+size_t PcapFileReader::getNumPacketsRead() const
+{
+    return _num_packets_read;
+}
+
 } // namespace pcap
