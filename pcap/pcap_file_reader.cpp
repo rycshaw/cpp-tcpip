@@ -75,6 +75,8 @@ bool PcapFileReader::readNextPacket()
 const PcapPacketHeader_t &PcapFileReader::getPcapPacketHeader() const
 {
     RT_ASSERT(_num_packets_read > 0, "No packets read in yet");
+
+    return _packet_header;
 }
 
 const EthernetHeader_t &PcapFileReader::getEthernetHeader() const

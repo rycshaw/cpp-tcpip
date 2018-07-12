@@ -29,19 +29,7 @@
 #include <arpa/inet.h>
 #include <cstdint>
 
-// XXX - TODO: replace with an assert that is evaluated even when debug is turned off.
-#include <iostream>
-#include <string>
-#include <cassert>
-inline void RT_ASSERT(bool condition, const std::string &message) {
-    if (!condition) {
-        std::cerr << message << std::endl;
-        assert(condition);
-    }
-}
-//#define RT_ASSERT(x, y) if (!x) { std::cout << y; assert(x) }
-
-#define RT_THROW(msg) throw std::runtime_error(msg)
+#include "util/throw_assert.hpp"
 
 namespace pcap {
 

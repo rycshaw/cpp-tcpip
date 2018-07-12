@@ -25,6 +25,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "pcap/hexdump.hpp"
 #include "pcap/pcap_file_reader.hpp"
 
 namespace pcap {
@@ -37,6 +38,8 @@ void dumpIpV4Packet(const pcap::PcapPacketHeader_t &packet_header,
         reinterpret_cast<const IpV4Header_t *>(ethernet_header.getPayloadPtr());
     std::cout << "IpV4: protocol: " << static_cast<int>(ip_header->protocol)
               << ", IpPayloadLengthBytes: " << ip_header->getPayloadLengthBytesHbo() << std::endl;
+    std::cout << hexHeader() << printableHeader() << std::endl
+              << binaryToString(reinterpret_cast<const uint8_t *>(ip_header), ip_header->getTotalLengthBytes());
 }
 
 void dumpIpV6Packet(const pcap::PcapPacketHeader_t &packet_header,
@@ -47,6 +50,8 @@ void dumpIpV6Packet(const pcap::PcapPacketHeader_t &packet_header,
         reinterpret_cast<const IpV6Header_t *>(ethernet_header.getPayloadPtr());
     std::cout << "IpV6: next_header: " << static_cast<int>(ip_header->next_header)
               << ", IpPayloadLengthBytes: " << ip_header->getPayloadLengthBytesHbo() << std::endl;
+    std::cout << hexHeader() << printableHeader() << std::endl
+              << binaryToString(reinterpret_cast<const uint8_t *>(ip_header), ip_header->getTotalLengthBytes());
 }
 
 void dumpPacket(const pcap::PcapPacketHeader_t &packet_header,
