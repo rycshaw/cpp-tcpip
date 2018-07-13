@@ -338,7 +338,7 @@ struct IpV6Header_t {
     // where the actual payload (eg the start of the UDP or TCP header) begins.
     size_t getInternetHeaderLengthBytes() const {
 
-        // XXX - iterate over the extension headers
+        // Iterate over the extension headers.
         uint16_t total_header_length = sizeof(IpV6Header_t);
         const uint8_t *extension_header_start = reinterpret_cast<const uint8_t*>(&version_traffic_class_flow_label) + sizeof(IpV6Header_t);
         uint8_t next_header = next_header;

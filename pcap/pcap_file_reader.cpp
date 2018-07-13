@@ -43,6 +43,15 @@ PcapFileReader::PcapFileReader(const std::string &pcap_filename)
     // Read in the file header
     ssize_t bytes_read = read(_fd, &_file_header, sizeof(_file_header));
     RT_ASSERT(bytes_read > 0, "Failed to read Pcap file header");
+
+    RT_ASSERT(_file_header.magic_number != 0x0d0a0a0d && _file_header.magic_number != 0x0a0d0d0a,
+              "pcap-ng files not supported.");
+
+    RT_ASSERT(_file_header.magic_number != 0xd4c3b2a1 && _file_header.magic_number != 0x4d3cb2a1,
+              "Endian-ness of pcap file not supported.");
+
+    RT_ASSERT(_file_header.magic_number == 0xa1b2c3d4 || _file_header.magic_number == 0xa1b23c4d,
+              "Bad magic_number in file header");
 }
 
 const PcapFileHeader_t &PcapFileReader::getPcapFileHeader() const

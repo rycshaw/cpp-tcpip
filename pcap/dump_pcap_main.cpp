@@ -71,6 +71,9 @@ void dumpPacket(const pcap::PcapPacketHeader_t &packet_header,
 
 } // namespace pcap
 
+// You can get sample pcap files from http://packetlife.net/captures/protocol/ipv6/
+// Note that pcap-ng files are currently not supported.
+
 int main(int argc, char *argv[]) {
     constexpr char kSyntax[] = "dump_pcap_ipv6 PCAP_FILE";
 
@@ -79,10 +82,10 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    // XXX - Open the pcap_file_reader.
+    // Open the pcap_file_reader.
     pcap::PcapFileReader reader(argv[1]);
 
-    // XXX - loop over the packets, dump each to stdout.
+    // loop over the packets, dump each to stdout.
     while (reader.readNextPacket()) {
         dumpPacket(reader.getPcapPacketHeader(),
                    reader.getEthernetHeader());
