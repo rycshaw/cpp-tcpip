@@ -4,3 +4,5 @@
 * pcap (https://wiki.wireshark.org/Development/LibpcapFileFormat) files are supported, but not pcap-ng (https://www.winpcap.org/ntar/draft/PCAP-DumpFileFormat.html)
 
 See dump_pcap_main.cpp for sample use.
+
+Sample pcap files available at http://packetlife.net/captures/protocol/ipv6/

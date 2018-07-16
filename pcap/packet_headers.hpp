@@ -39,6 +39,7 @@ namespace pcap {
 
 // -- PCAP file and packet headers:
 
+// https://wiki.wireshark.org/Development/LibpcapFileFormat
 struct PcapFileHeader_t {
     uint32_t magic_number;
     uint16_t version_major;
@@ -59,8 +60,9 @@ struct PcapPacketHeader_t {
 
 // -- Ethernet and IP/UDP/TCP headers:
 
-
 static constexpr size_t kMacAddressLength = 6;
+
+// https://en.wikipedia.org/wiki/EtherType
 enum class EtherType_e : uint16_t {
     kIpV4 = 0x0800,
     kVlan1Prefix = 0x8100,
@@ -68,6 +70,7 @@ enum class EtherType_e : uint16_t {
     kIpV6 = 0x86dd
 };
 
+// https://en.wikipedia.org/wiki/Ethernet_frame
 struct EthernetHeader_t {
     uint8_t mac_destination[kMacAddressLength];
     uint8_t mac_source[kMacAddressLength];
@@ -102,6 +105,7 @@ struct EthernetHeader_t {
     }
 };
 
+// https://en.wikipedia.org/wiki/IPv4
 struct IpV4Header_t {
     uint8_t version_ihl;
     uint8_t dscp_ecn;
@@ -151,6 +155,7 @@ struct IpV4Header_t {
     // TODO: compute pseudo header checksum differently for ipv4 vs ipv6.
 };
 
+// https://en.wikipedia.org/wiki/User_Datagram_Protocol
 struct UdpHeader_t {
     uint16_t source_port;
     uint16_t destination_port;
@@ -178,6 +183,7 @@ struct UdpHeader_t {
     // TODO: compute pseudo header checksum differently for ipv4 vs ipv6.
 };
 
+// https://en.wikipedia.org/wiki/Transmission_Control_Protocol
 struct TcpHeader_t {
     uint16_t source_port;
     uint16_t destination_port;
@@ -253,6 +259,7 @@ struct IpV6ExtensionHeader_t {
     }
 };
 
+// https://en.wikipedia.org/wiki/IPv6_packet
 struct IpV6Header_t {
     static constexpr size_t kIpV6AddressNumBytes = 16;
 
@@ -327,7 +334,6 @@ struct IpV6Header_t {
                 // No more headers.
                 return 0;
 
-//            case IpV6ExtensionHeader_t::HeaderType_e::kIpV4Reserved0:
             case IpV6ExtensionHeader_t::HeaderType_e::kReserved255:
             default:
                 RT_THROW("Unhandled ExtensionHeader type");

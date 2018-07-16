@@ -22,12 +22,12 @@
  * IN THE SOFTWARE.
  */
 
-#include "pcap/hexdump.hpp"
+#include "util/hexdump.hpp"
 #include "util/throw_assert.hpp"
 
 #include <sstream>
 
-//namespace hex_dump {
+namespace hexdump {
 
 std::string hexHeader()
 {
@@ -177,4 +177,4 @@ std::string binaryToString(const uint8_t *data, size_t len)
     return oss.str();
 }
 
-//} // namespace hex_dump
+} // namespace hexdump

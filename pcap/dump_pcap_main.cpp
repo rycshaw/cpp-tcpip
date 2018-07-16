@@ -25,33 +25,37 @@
 #include <iostream>
 #include <sstream>
 
-#include "pcap/hexdump.hpp"
 #include "pcap/pcap_file_reader.hpp"
+#include "util/hexdump.hpp"
 
 namespace pcap {
 
 void dumpIpV4Packet(const pcap::PcapPacketHeader_t &packet_header,
                     const pcap::EthernetHeader_t &ethernet_header)
 {
-    RT_ASSERT(pcap::EtherType_e(ethernet_header.getEtherTypeHbo()) == EtherType_e::kIpV4, "Expected ethertype == ipv4");
+    RT_ASSERT(pcap::EtherType_e(ethernet_header.getEtherTypeHbo()) == EtherType_e::kIpV4,
+              "Expected ethertype == ipv4");
     const IpV4Header_t *ip_header =
         reinterpret_cast<const IpV4Header_t *>(ethernet_header.getPayloadPtr());
     std::cout << "IpV4: protocol: " << static_cast<int>(ip_header->protocol)
               << ", IpPayloadLengthBytes: " << ip_header->getPayloadLengthBytesHbo() << std::endl;
-    std::cout << hexHeader() << printableHeader() << std::endl
-              << binaryToString(reinterpret_cast<const uint8_t *>(ip_header), ip_header->getTotalLengthBytes());
+    std::cout << hexdump::hexHeader() << hexdump::printableHeader() << std::endl
+              << hexdump::binaryToString(reinterpret_cast<const uint8_t *>(ip_header),
+                                         ip_header->getTotalLengthBytes());
 }
 
 void dumpIpV6Packet(const pcap::PcapPacketHeader_t &packet_header,
                     const pcap::EthernetHeader_t &ethernet_header)
 {
-    RT_ASSERT(pcap::EtherType_e(ethernet_header.getEtherTypeHbo()) == EtherType_e::kIpV6, "Expected ethertype == ipv6");
+    RT_ASSERT(pcap::EtherType_e(ethernet_header.getEtherTypeHbo()) == EtherType_e::kIpV6,
+              "Expected ethertype == ipv6");
     const IpV6Header_t *ip_header =
         reinterpret_cast<const IpV6Header_t *>(ethernet_header.getPayloadPtr());
     std::cout << "IpV6: next_header: " << static_cast<int>(ip_header->next_header)
               << ", IpPayloadLengthBytes: " << ip_header->getPayloadLengthBytesHbo() << std::endl;
-    std::cout << hexHeader() << printableHeader() << std::endl
-              << binaryToString(reinterpret_cast<const uint8_t *>(ip_header), ip_header->getTotalLengthBytes());
+    std::cout << hexdump::hexHeader() << hexdump::printableHeader() << std::endl
+              << hexdump::binaryToString(reinterpret_cast<const uint8_t *>(ip_header),
+                                         ip_header->getTotalLengthBytes());
 }
 
 void dumpPacket(const pcap::PcapPacketHeader_t &packet_header,
@@ -65,7 +69,8 @@ void dumpPacket(const pcap::PcapPacketHeader_t &packet_header,
             dumpIpV6Packet(packet_header, ethernet_header);
             break;
         default:
-            std::cout << "Unhandled ethertype " << std::hex << ethernet_header.getEtherTypeHbo() << std::dec << std::endl;
+            std::cout << "Unhandled ethertype " << std::hex << ethernet_header.getEtherTypeHbo()
+                      << std::dec << std::endl;
     }
 }
 

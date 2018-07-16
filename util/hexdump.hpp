@@ -26,7 +26,7 @@
 
 #include <sstream>
 
-//namespace hex_dump {
+namespace hexdump {
 
 static constexpr size_t kLineLength = 16;
 
@@ -49,4 +49,4 @@ std::string binaryToPrintable(const uint8_t data, size_t len);
  */
 std::string binaryToString(const uint8_t *data, size_t len);
 
-//} // namespace hex_dump
+} // namespace hexdump
